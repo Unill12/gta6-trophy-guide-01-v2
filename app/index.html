@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leonida Ledger — GTA VI Trophy Guide &amp; Tracker</title>
+<meta name="description" content="Every one of the 55 GTA VI PlayStation trophies: a tracker, a platinum roadmap, missable warnings, and a cited guide for each — offline, free, open source.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23ffb43a'/%3E%3Ctext x='8' y='12' font-size='11' text-anchor='middle' fill='%23241a05' font-family='sans-serif' font-weight='bold'%3EL%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <h1>Leonida Ledger</h1>
+      <p class="subtitle">GTA VI Trophy Guide &amp; Tracker — all 55 PlayStation trophies, with cited guides. Works fully offline.</p>
+    </div>
+    <div class="progress-wrap" aria-live="polite">
+      <svg class="ring" viewBox="0 0 72 72" width="72" height="72" role="img" aria-label="Platinum progress">
+        <circle class="ring-bg" cx="36" cy="36" r="30"></circle>
+        <circle class="ring-fg" id="progressRing" cx="36" cy="36" r="30"></circle>
+        <text class="ring-text" id="progressPct" x="36" y="40" text-anchor="middle">0%</text>
+      </svg>
+      <div class="progress-side">
+        <div class="progress-line"><span id="progressText">0 of 55 earned</span></div>
+        <div class="grade-counts" id="gradeCounts"></div>
+        <div class="next-up" id="nextUp"></div>
+      </div>
+    </div>
+  </div>
+  <nav class="views" aria-label="Guide sections">
+    <button type="button" class="view-btn active" data-view="tracker">Tracker</button>
+    <button type="button" class="view-btn" data-view="roadmap">Roadmap to Platinum</button>
+    <button type="button" class="view-btn" data-view="missables">Missables <span class="view-count" id="missableCount"></span></button>
+    <button type="button" class="view-btn" data-view="grinds">Collectibles &amp; Grinds</button>
+    <button type="button" class="view-btn" data-view="sources">Sources</button>
+  </nav>
+</header>
+
+<main>
+  <section id="view-tracker" class="view">
+    <div class="toolbar">
+      <input id="search" type="search" placeholder="Search a trophy, mission or place…" aria-label="Search trophies">
+      <div class="filters" role="group" aria-label="Filter by kind">
+        <button type="button" data-filter="all" class="filter-btn active">All 55</button>
+        <button type="button" data-filter="story" class="filter-btn">Story</button>
+        <button type="button" data-filter="missable" class="filter-btn">Missable</button>
+        <button type="button" data-filter="collectibles" class="filter-btn">Collectibles</button>
+        <button type="button" data-filter="activities" class="filter-btn">Activities</button>
+        <button type="button" data-filter="unearned" class="filter-btn">Not yet earned</button>
+      </div>
+      <label class="grade-label">Grade
+        <select id="gradeFilter">
+          <option value="all">All grades</option>
+          <option value="platinum">Platinum</option>
+          <option value="gold">Gold</option>
+          <option value="silver">Silver</option>
+          <option value="bronze">Bronze</option>
+        </select>
+      </label>
+      <label class="spoiler-label"><input id="spoilerToggle" type="checkbox"> Hide story spoilers</label>
+      <div class="io-buttons">
+        <button id="exportBtn" type="button">Export progress</button>
+        <label class="import-btn">Import progress <input id="importFile" type="file" accept="application/json,.json"></label>
+        <button id="resetBtn" type="button">Reset</button>
+      </div>
+    </div>
+    <p class="list-count" id="listCount"></p>
+    <p class="empty-state" id="emptyState" hidden></p>
+    <div id="trophyList" class="trophy-list"></div>
+  </section>
+
+  <section id="view-roadmap" class="view" hidden>
+    <h2>Roadmap to the Platinum — “Vice Got a Price!”</h2>
+    <p class="section-intro">Play in this order and you will not lock yourself out of anything. Each stage lists exactly which trophies it earns; tick them off in the Tracker as you go. Total time for an average player: roughly 90–120 hours, most of it in stages 3–4.</p>
+    <div id="roadmapStages" class="roadmap-stages"></div>
+    <div class="platinum-callout">
+      <h3>The Platinum itself</h3>
+      <p><strong>Vice Got a Price!</strong> pops the moment the other 54 are earned — there is no extra task. The real gate is <strong>A Long Road</strong> (100% completion), which needs every story mission, stranger strand, activity, collectible set and challenge the game counts. Finish stage 4 before you judge how far off 100% you are: the in-game stats menu shows the exact percentage and what is missing.</p>
+    </div>
+  </section>
+
+  <section id="view-missables" class="view" hidden>
+    <h2>Missable trophies — read this before you start</h2>
+    <p class="section-intro">Most of GTA VI can be revisited after the story, but these trophies are tied to moments, choices or one-time setups. “Possibly missable” means the guides disagree or the trigger is still being confirmed — the guide says so instead of guessing. When in doubt, keep a manual save before story choices.</p>
+    <div id="missableList" class="trophy-list"></div>
+  </section>
+
+  <section id="view-grinds" class="view" hidden>
+    <h2>Collectibles &amp; grinds — the long counters</h2>
+    <p class="section-intro">These are the trophies with a number attached. Use the + / − buttons to track your own count; the bar fills as you go. Counts are saved in your browser next to your earned ticks, and travel with the export file.</p>
+    <div id="grindList" class="grind-list"></div>
+  </section>
+
+  <section id="view-sources" class="view" hidden>
+    <h2>Sources — where every claim comes from</h2>
+    <p class="section-intro">Trophy names, descriptions and grades are the official list, as tracked by PSNProfiles and Exophase. Every method in this guide is written in our own words and cites the guide it draws on; where the guides have not confirmed an exact trigger yet, the guide says so rather than inventing one. Figures are audit counts computed from the data file itself.</p>
+    <p class="audit-line"><span id="auditSteps"></span> numbered steps across all guides · <span id="auditSources"></span> named sources · <span id="auditMissable"></span> trophies flagged possibly missable · <span id="auditUnconfirmed"></span> guides still being confirmed by the community.</p>
+    <table class="source-table">
+      <thead><tr><th>Source</th><th>What it covers here</th><th>Link</th></tr></thead>
+      <tbody id="sourceRows"></tbody>
+    </table>
+    <p class="honesty-note">No Rockstar artwork or logos are used anywhere in this guide. GTA VI, Grand Theft Auto and Leonida are trademarks of their owners; this is an unofficial fan-made tracker, free and open source under the MIT license.</p>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>Leonida Ledger — an unofficial, free, open-source GTA VI trophy guide &amp; tracker. Works offline; your progress never leaves your browser. Trophy names, descriptions and grades: the official list (PSNProfiles / Exophase).</p>
+</footer>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
